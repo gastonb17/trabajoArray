@@ -1,0 +1,53 @@
+// Array extraño
+const strangeArray = [
+  "Zero",
+  function () {
+    alert("Hola soy una función en un array");
+  },
+  22,
+  null,
+  "Go lang",
+  undefined,
+  "Cobol",
+  "I'm programmer",
+  -2000,
+  "Hello world",
+  `One is ${1}`,
+  { name: "Info", lastname: "last info" },
+  () => true,
+  function showNumbers() {
+    return "1, 2, 3, 4";
+  },
+  "Another String",
+  ["Hola mundo!"],
+  "b is a letter",
+  "JavaScript",
+];
+
+// Función que recibe por parámetro un array y muestra sus elementos en pantalla
+function showList(array) {
+  const container = document.getElementById("list");
+  container.innerHTML = "";
+  // Más info de forEach => https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach
+  array.forEach((element) => {
+    const li = document.createElement("li");
+    li.appendChild(document.createTextNode(element));
+    container.appendChild(li);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", (e) => {
+
+  // Filtramos el array para que solo contenga elementos de tipo string
+  const newArray = strangeArray.filter((str) => typeof str === "string");
+
+  // Ordenamos el array de strings...
+  // Utilizando solo .sort el array se ordena por valores unicode aquellas palabras que empiecen con mayusculas iran antes que las que comiencen por minusculas.
+  // por lo que el srting "b is a letter" ocuparia el ultimo lugar.
+  // .localeCompare me compara los string teniendo en cuenta el orden de los caracteres en el idioma en el que se está ejecutando el código.
+  // los compararia de esta forma "b is a letter".localeCompare("Go lang") devolviendo un -1, dando a entender que "b" esta antes que "G".
+  newArray.sort((a, b) => a.localeCompare(b));
+
+  // Mostramos el array ordenado
+  showList(newArray);
+});
